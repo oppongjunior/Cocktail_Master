@@ -9,7 +9,7 @@ import { Task_status } from "../Utils/TaskStatus";
 
 const AddTask = () => {
   const [title, setTitle] = useState("");
-  const [time, setTime] = useState("2");
+  const [time, setTime] = useState("");
 
   const theme = useSelector((state) => state.themeState);
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const AddTask = () => {
 
   //change Time
   const onChangeTime = (value) => {
-    const re = /^[0-9\b]+$/;
+    const re = /^[0-9]*\.?[0-9]*$/;
     if (value === "" || re.test(value)) {
       setTime(value);
     }
@@ -30,15 +30,25 @@ const AddTask = () => {
   //add task
   const onAdd = () => {
     if (title && time) {
+      if (parseFloat(time) < 0.1) {
+        //minimal time error
+        Alert.alert("Invalid time", `Your time should be at least 0.1`, [
+          {
+            text: "ok",
+          },
+        ]);
+        setTime("");
+        return;
+      }
       parseInt;
       const task = {
         key: Date.now(),
         title: title,
-        time: parseInt(time),
-        timeLeft: parseInt(time),
+        time: parseFloat(time),
+        timeLeft: parseFloat(time),
         status: {
-          started:Task_status.started,
-          ended:Task_status.end
+          started: Task_status.started,
+          ended: Task_status.end,
         },
         image: "",
       };
@@ -91,8 +101,8 @@ const AddTask = () => {
             <TextInput
               keyboardType="numeric"
               mode="outlined"
-              label="Enter here..."
-              placeholder="Enter minutes"
+              label="Enter minutes here"
+              placeholder="0.2"
               outlineColor={colors.shared.s_color}
               value={time}
               onChangeText={onChangeTime}

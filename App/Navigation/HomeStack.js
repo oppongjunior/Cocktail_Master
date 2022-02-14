@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
+import {useSelector} from "react-redux";
 import { createStackNavigator } from "@react-navigation/stack";
 import Tasks from "../Screens/Tasks";
 import { colors } from "../Utils/Colors";

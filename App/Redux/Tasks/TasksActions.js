@@ -32,6 +32,10 @@ const updateTask = (id, task) => ({
     task,
   },
 });
+const updateFocusing = (value) => ({
+  type: ActionTypes.UPDATE_FOCUSING,
+  payload: value,
+});
 
 //load task
 export const loadTasksFunc = () => {
@@ -63,5 +67,11 @@ export const deleteTaskFunc = (id) => {
 export const updateTaskFunc = (id,task) => {
   return (dispatch) => {
     dispatch(updateTask(id, task));
+  };
+};
+//updateTaskFunc
+export const updateFocusingFunc = (value) => {
+  return (dispatch) => {
+    dispatch(updateFocusing(value));
   };
 };

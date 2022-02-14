@@ -12,6 +12,9 @@ import { updateTaskFunc } from "../Redux/Tasks/TasksActions";
 const minutesToMillis = (minutes) => {
   return Math.floor(minutes * 60 * 1000);
 };
+const MillisToMinutes = (millis) => {
+  return millis / 60 / 1000;
+};
 
 const formatTime = (time) => {
   return time < 10 ? `0${time}` : time;
@@ -29,6 +32,7 @@ const Focus = (props) => {
 
   const minutesLeft = Math.floor(millis / 1000 / 60) % 60;
   const secondsLeft = Math.floor(millis / 1000) % 60;
+
 
   //function to handle start and resume countdown
   const handleStart = () => {
@@ -71,10 +75,54 @@ const Focus = (props) => {
     return () => clearInterval(interval.current);
   }, [ongoing]);
 
+  //change the progress bar and also update the item's time left value when millis changes
   useEffect(() => {
-    setProgressBar(millis / minutesToMillis(timeLeft));
+    if (millis > 0) {
+      setProgressBar(millis / minutesToMillis(timeLeft));
+    } else {
+      setOngoing(false);
+      setProgressBar(0);
+    }
+
+    const updatedTaskItem = {
+      ...route.params.item,
+      timeLeft: MillisToMinutes(millis),
+      status: {
+        started: true,
+        ended: millis > 0 ? false : true,
+      },
+    };
+
+    dispatch(updateTaskFunc(key, updatedTaskItem));
   }, [millis]);
 
+  //view if the task has ended
+  if (!(millis > 0)) {
+    return (
+      <View
+        style={{ ...styles.container, backgroundColor: theme.theme.background }}
+      >
+        <Text
+          style={{
+            ...styles.title,
+            textAlign: "center",
+            fontSize: FontSize.large,
+          }}
+        >
+          {title}
+        </Text>
+
+        {/* duration card */}
+        <Card style={{ ...styles.countDown }}>
+          <Text style={{ textAlign: "center" }}>
+            You have finished Focusing on this task
+          </Text>
+        </Card>
+      </View>
+    );
+  }
+
+  //
   return (
     <View
       style={{ ...styles.container, backgroundColor: theme.theme.background }}
@@ -90,16 +138,20 @@ const Focus = (props) => {
       </Text>
 
       {/* duration card */}
-      <Card style={{ ...styles.countDown, }}>
+      <Card style={{ ...styles.countDown }}>
         <Text style={{ ...styles.countDownText }}>
           {formatTime(minutesLeft)}:{formatTime(secondsLeft)}
         </Text>
       </Card>
-      
+
       {/* progress bar */}
 
       <View>
-        <ProgressBar progress={progressBar} style={{ ...styles.progressBar }} color={colors.shared.s_color} />
+        <ProgressBar
+          progress={progressBar}
+          style={{ ...styles.progressBar }}
+          color={colors.shared.s_color}
+        />
       </View>
       {/* button box */}
       <View style={{ ...styles.btnContainer }}>
@@ -147,7 +199,7 @@ const styles = StyleSheet.create({
   countDown: {
     padding: paddings.p_3,
     marginTop: margins.m_2,
-    marginHorizontal:margins.m_3
+    marginHorizontal: margins.m_3,
   },
   countDownText: {
     fontSize: FontSize.xx_large + 10,
@@ -155,11 +207,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: colors.shared.s_color,
   },
-  progressBar:{
-    marginTop:margins.m_4,
-    height:20,
-    marginHorizontal:margins.m_3,
-    borderRadius:20,
+  progressBar: {
+    marginTop: margins.m_4,
+    height: 20,
+    marginHorizontal: margins.m_3,
+    borderRadius: 20,
   },
   btnContainer: {
     justifyContent: "center",
