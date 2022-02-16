@@ -1,3 +1,4 @@
+import { async_store } from "../../Utils/AsyncStore";
 import { ActionTypes } from "./TasksActionTypes";
 
 const initState = {
@@ -11,9 +12,9 @@ const Tasksreducer = (state = initState, action) => {
     case ActionTypes.TASK_LOAD_START:
       return { ...state, taskLoading: true };
     case ActionTypes.UPDATE_FOCUSING:
-      return { ...state, focusing:action.payload };
+      return { ...state, focusing: action.payload };
     case ActionTypes.TASK_LOAD_SUCCESS:
-      return { ...state, task: action.payload, taskLoading: false };
+      return { ...state, tasks: action.payload, taskLoading: false };
     case ActionTypes.TASK_LOAD_FAIL:
       return { ...state, taskLoading: false };
     case ActionTypes.ADD_TASK:

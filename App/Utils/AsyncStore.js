@@ -14,7 +14,7 @@ export const async_load = async (key) => {
   try {
     const fetch = await AsyncStorage.getItem(key);
     if (fetch) {
-      return await JSON.parse(fetch);
+      return fetch;
     }
     return null;
   } catch (error) {

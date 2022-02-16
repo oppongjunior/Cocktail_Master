@@ -6,12 +6,14 @@ import { Card, Title, Paragraph, TextInput, Button } from "react-native-paper";
 import { margins, paddings } from "../Utils/spacing";
 import { addTaskFunc } from "../Redux/Tasks/TasksActions";
 import { Task_status } from "../Utils/TaskStatus";
+import { async_store } from "../Utils/AsyncStore";
 
 const AddTask = () => {
   const [title, setTitle] = useState("");
   const [time, setTime] = useState("");
 
   const theme = useSelector((state) => state.themeState);
+  const taskState = useSelector(state=>state.taskState);
   const dispatch = useDispatch();
 
   //change title

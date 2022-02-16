@@ -12,7 +12,7 @@ const loadTaskSuccess = (tasks) => ({
   type: ActionTypes.TASK_LOAD_SUCCESS,
   payload: tasks,
 });
-const loadTaskfail = (tasks) => ({
+const loadTaskfail = () => ({
   type: ActionTypes.TASK_LOAD_FAIL,
   payload: [],
 });
@@ -43,7 +43,10 @@ export const loadTasksFunc = () => {
     dispatch(loadTaskStart);
     const result = async_load("tasks");
     if (result) {
-      dispatch(loadTaskSuccess(result));
+      result.then(response=>{
+        console.log(result);
+        dispatch(loadTaskSuccess([]));
+      })
       return;
     }
     dispatch(loadTaskfail);
