@@ -1,0 +1,21 @@
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import LottieView from "lottie-react-native";
+
+
+ 
+const Loading = () => {
+    
+    return (
+        <View style={styles.container}>
+           <LottieView source={require("../assets/Lotties/Cocktail_2.json")} autoPlay loop />
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    }
+});
+export default Loading;
