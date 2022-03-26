@@ -1,12 +1,10 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeStack from "./Stacks/HomeStack";
 import SearchStack from "./Stacks/SearchStack";
 import FavoritesStack from "./Stacks/FavoritesStack";
-import SettingStack from "./Stacks/SettingsStack";
-import { AntDesign } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
+import { AntDesign } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const TabBottomNav = () => {
   const BottomTab = createBottomTabNavigator();
@@ -31,32 +29,54 @@ const TabBottomNav = () => {
 
           elevation: 3,
         },
-        tabBarLabel:()=>null,
+        tabBarLabel: () => null,
         tabBarLabelStyle: {
           marginBottom: 10,
-          letterSpacing:1,
+          letterSpacing: 1,
         },
       }}
     >
-      <BottomTab.Screen name="HomeStack" component={HomeStack} options={{ 
-          tabBarIcon:({focused})=><AntDesign name="home" size={24} color={focused?"#f46036":"black"} />
-       }} />
-      <BottomTab.Screen name="SearchStack" component={SearchStack} options={{ 
-          tabBarIcon:({focused})=><AntDesign name="search1" size={24} color={focused?"#f46036":"black"} />
-       }}/>
-      <BottomTab.Screen name="FavoritesStack" component={FavoritesStack} options={{ 
-          tabBarIcon:({focused})=><MaterialIcons name="favorite-border" size={24} color={focused?"#f46036":"black"} />
-       }} />
-      <BottomTab.Screen name="SettingsStack" component={SettingStack} options={{ 
-          tabBarIcon:({focused})=><AntDesign name="setting" size={24} color={focused?"#f46036":"black"} />
-       }}/>
+      <BottomTab.Screen
+        name="HomeStack"
+        component={HomeStack}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <AntDesign
+              name="home"
+              size={30}
+              color={focused ? "#f46036" : "black"}
+            />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="SearchStack"
+        component={SearchStack}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <AntDesign
+              name="search1"
+              size={30}
+              color={focused ? "#f46036" : "black"}
+            />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="FavoritesStack"
+        component={FavoritesStack}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <MaterialIcons
+              name="favorite-border"
+              size={30}
+              color={focused ? "#f46036" : "black"}
+            />
+          ),
+        }}
+      />
     </BottomTab.Navigator>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default TabBottomNav;

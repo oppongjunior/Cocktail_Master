@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { useDispatch } from "react-redux";
 import Loading from "../../Component/Loading";
-import { useSelector } from "react-redux";
 import CocktailList from "../../Component/CockTails/CockTailList";
 import Error from "../../Component/Error";
 import axios from "axios";
@@ -11,7 +9,6 @@ const CategoryStack = ({ route, navigation }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const cockTailState = useSelector((state) => state.cockTailState);
 
   const fetchCategories = async (url) => {
     try {

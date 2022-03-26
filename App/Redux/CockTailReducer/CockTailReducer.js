@@ -2,31 +2,23 @@ import { CockTailActionTypes } from "./CockTailActionTypes";
 
 const INITIAL_STATE = {
   HomeCocktails: [],
-  CategoryCocktails: [],
-  AlcoholicCocktails: [],
-  IngredientsCocktails: [],
   Categories: [],
   Ingredients: [],
   Alcoholics: [],
   SeachCocktails: [],
+  Favorites: [],
   loading: {
     homeLoading: false,
-    categoryLoading: false,
     categoryListLoading: false,
-    ingredientsLoading: false,
     ingredientListLoading: false,
     alcoholicListLoading: false,
-    alcoholicLoading: false,
     searchLoading: false,
   },
   errors: {
     homeError: false,
-    categoryError: false,
-    ingredientsError: false,
     categoryListError: false,
     ingredientListError: false,
     alcoholicListError: false,
-    alcholicError: false,
     searchError: false,
   },
 };
@@ -49,25 +41,18 @@ export default (state = INITIAL_STATE, action) => {
         HomeCocktails: action.payload,
       };
 
-    //categorycocktails
-    case CockTailActionTypes.START_CATEGORYCOCKTAILS_LOAD:
+    //favorites
+    case CockTailActionTypes.LOAD_FAVORITES:
+      return { ...state, Favorites: action.payload };
+    case CockTailActionTypes.ADD_FAVORITES:
       return {
         ...state,
-        CategoryCocktails: [],
-        loading: { ...state.loading, categoryLoading: true },
+        Favorites: action.payload,
       };
-    case CockTailActionTypes.START_CATEGORYCOCKTAILS_LOAD_FAIL:
+    case CockTailActionTypes.DELETE_FAVORITES:
       return {
         ...state,
-        loading: { ...state.loading, categoryLoading: false },
-        errors: { ...state.errors, categoryError: true },
-      };
-    case CockTailActionTypes.START_CATEGORYCOCKTAILS_LOAD_SUCCESS:
-      return {
-        ...state,
-        loading: { ...state.loading, categoryLoading: false },
-        errors: { ...state.errors, categoryError: false },
-        CategoryCocktails: action.payload,
+        Favorites: action.payload,
       };
 
     //category list

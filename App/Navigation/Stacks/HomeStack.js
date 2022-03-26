@@ -1,5 +1,4 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "../../Screens/Home";
 import CategoryStack from "../../Screens/Stacks/CategoryStack";
@@ -59,9 +58,4 @@ const HomeStack = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 export default HomeStack;

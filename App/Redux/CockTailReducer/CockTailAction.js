@@ -1,5 +1,7 @@
 import { CockTailActionTypes } from "./CockTailActionTypes";
 import axios from "axios";
+import { ActionTypes } from "redux-devtools";
+import { async_load } from "../../Utils/AsyncStore";
 
 //start home cocktail load action
 const homeCockTailsLoad = () => ({
@@ -11,16 +13,6 @@ const categoryCocktailsLoads = (payload) => ({
   payload: payload,
 });
 
-//start ingredient cocktail load action
-const ingredientsCocktailsLoad = (payload) => ({
-  type: CockTailActionTypes.START_INGREDIENTSCOCKTAILS_LOAD,
-  payload: payload,
-});
-//start alcoholic cocktail load action
-const alcoholCocktailsLoad = (payload) => ({
-  type: CockTailActionTypes.START_ALCOHOLICCOCKTAILS_LOAD,
-  payload: payload,
-});
 //start search cocktail load action
 const searchCocktailsLoad = (payload) => ({
   type: CockTailActionTypes.START_SEARCHCOCKTAILS_LOAD,
@@ -48,21 +40,7 @@ const homeCockTailSuccess = (payload) => ({
   type: CockTailActionTypes.START_HOMECOCKTAILS_LOAD_SUCCESS,
   payload: payload,
 });
-//category cocktail success
-const categoryCockTailSuccess = (payload) => ({
-  type: CockTailActionTypes.START_CATEGORYCOCKTAILS_LOAD_SUCCESS,
-  payload: payload,
-});
-//ingredient cocktail success
-const ingredientCockTailSuccess = (payload) => ({
-  type: CockTailActionTypes.START_INGREDIENTSCOCKTAILS_LOAD_SUCCESS,
-  payload: payload,
-});
-//alcohol cocktail success
-const alcoholCockTailSuccess = (payload) => ({
-  type: CockTailActionTypes.START_ALCOHOLICCOCKTAILS_LOAD_SUCCESS,
-  payload: payload,
-});
+
 //search cocktail success
 const searchCocktailSuccess = (payload) => ({
   type: CockTailActionTypes.START_SEARCHCOCKTAILS_LOAD_SUCCESS,
@@ -94,16 +72,7 @@ const categoryCockTailFail = (payload) => ({
   type: CockTailActionTypes.START_CATEGORYCOCKTAILS_LOAD_FAIL,
   payload: payload,
 });
-//ingredient cocktail fail
-const ingredientCockTailFail = (payload) => ({
-  type: CockTailActionTypes.START_INGREDIENTSCOCKTAILS_LOAD_FAIL,
-  payload: payload,
-});
-//alcohol cocktail fail
-const alcoholCockTailFail = (payload) => ({
-  type: CockTailActionTypes.START_ALCOHOLICCOCKTAILS_LOAD_FAIL,
-  payload: payload,
-});
+
 //search cocktail fail
 const searchCocktailFail = (payload) => ({
   type: CockTailActionTypes.START_SEARCHCOCKTAILS_LOAD_FAIL,
@@ -124,10 +93,19 @@ const alcoholFail = (payload) => ({
   payload: payload,
 });
 
-//start home cocktail load fail action
-const start_load_homecCockTailFail = (payload) => ({
-  type: CockTailActionTypes.START_HOMECOCKTAILS_LOAD_FAIL,
-  payload: payload,
+//load favorites
+const loadFavorites = (data) => ({
+  type: CockTailActionTypes.LOAD_FAVORITES,
+  payload: data,
+});
+//ADD FAVORITES
+const addFavorite = (data) => ({
+  type: CockTailActionTypes.ADD_FAVORITES,
+  payload: data,
+});
+const deleteFavorite = (data) => ({
+  type: CockTailActionTypes.DELETE_FAVORITES,
+  payload: data,
 });
 
 //load home cocktail
@@ -143,16 +121,27 @@ export const loadHomeCocktailFunc = (url) => {
   };
 };
 
-//load categorycocktail
-export const loadcategoryCocktailFunc = (url) => {
-  return async (dispatch) => {
-    dispatch(categoryCocktailsLoads());
-    try {
-      let data = await axios.get(url);
-      dispatch(categoryCockTailSuccess(data.data.drinks));
-    } catch (error) {
-      dispatch(categoryCockTailFail());
+export const loadFavoritesFunc = () => {
+  return (dispatch) => {
+    const result = async_load("Favorites");
+    if (result) {
+      result.then((response) => {
+        dispatch(loadFavorites(JSON.parse(response)));
+      });
+    } else {
+      dispatch(loadFavorites([]));
     }
+  };
+};
+
+export const addFavoriteFunc = (data) => {
+  return (dispatch) => {
+    dispatch(addFavorite(data));
+  };
+};
+export const deleteFavoriteFunc = (data) => {
+  return (dispatch) => {
+    dispatch(deleteFavorite(data));
   };
 };
 

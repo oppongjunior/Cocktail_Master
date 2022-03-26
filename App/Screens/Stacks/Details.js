@@ -1,18 +1,15 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { useSelector } from "react-redux";
-import CocktailList from "../../Component/CockTails/CockTailList";
 import Error from "../../Component/Error";
 import Loading from "../../Component/Loading";
-import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
+import { Card, Title, Paragraph } from "react-native-paper";
 
 const Details = ({ route, navigation }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const cockTailState = useSelector((state) => state.cockTailState);
 
   const fetchCategories = async (url) => {
     try {
@@ -100,7 +97,6 @@ const Details = ({ route, navigation }) => {
               <Title style={styles.subtitle}>Instructions</Title>
               <Paragraph
                 style={styles.text}
-                numberOfLines={2}
                 lineBreakMode="tail"
                 maxFontSizeMultiplier={2}
               >
@@ -108,8 +104,6 @@ const Details = ({ route, navigation }) => {
               </Paragraph>
             </View>
           </Card.Content>
-
-         
         </Card>
       </View>
     </ScrollView>
