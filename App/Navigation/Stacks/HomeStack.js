@@ -46,14 +46,16 @@ const HomeStack = () => {
           headerTitle: "Ingredients",
         }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="details"
         component={Details}
         options={{
           headerTitle: "Detail",
+          headerStyle: {
+            backgroundColor: "#ff6700",
+          },
         }}
       />
-      
     </Stack.Navigator>
   );
 };
