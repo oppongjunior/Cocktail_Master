@@ -6,5 +6,5 @@ import CockTailReducer from "./CockTailReducer/CockTailReducer";
 
 
 const reducers = combineReducers({cockTailState:CockTailReducer});
-const store = createStore(reducers,composeWithDevTools(applyMiddleware(logger,thunk),));
+const store = createStore(reducers,composeWithDevTools(applyMiddleware(logger,thunk)));
 export default store;

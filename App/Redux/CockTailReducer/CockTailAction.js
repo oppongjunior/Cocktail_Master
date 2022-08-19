@@ -126,7 +126,11 @@ export const loadFavoritesFunc = () => {
     const result = async_load("Favorites");
     if (result) {
       result.then((response) => {
+       if(response === null){
+        dispatch(loadFavorites([]));
+       }else{
         dispatch(loadFavorites(JSON.parse(response)));
+       }
       });
     } else {
       dispatch(loadFavorites([]));

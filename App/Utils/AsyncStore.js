@@ -1,6 +1,4 @@
-const {
-  default: AsyncStorage,
-} = require("@react-native-async-storage/async-storage");
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const async_store = async (key, data) => {
   try {
